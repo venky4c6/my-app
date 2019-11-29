@@ -8,32 +8,8 @@ node{
  }
  
  stage('Build Docker Imager'){
-   sh 'docker build -t venky4c6/ubuntu .'
+   sh 'docker build -t pipeline .'
  }
  
- stage('Push to Docker Hub'){
  
-	 withCredentials([string(credentialsId: 'github-pwd', variable: 'dockerHubPwd')]) {
-        sh "docker login -u venky4c6 -p Siddaiah.1990"
-     }
-	 sh 'docker push venky4c6/ubuntu'
- }
- stage('Remove Previous Container'){
-	try{
-		def dockerRm = 'docker rm -f myweb'
-		sshagent(['docker-dev']) {
-			sh "ssh -o StrictHostKeyChecking=no ubuntu@172.31.29.23 ${dockerRm}"
-		}
-	}catch(error){
-		//  do nothing if there is an exception
-	}
- }
- stage('Deploy to Dev Environment'){
-   def dockerRun = 'docker run -d -p 8080:8080 --name myweb venky4c6/ubuntu '
-   sshagent(['docker-dev']) {
-    sh "ssh -o StrictHostKeyChecking=no ubuntu@172.31.29.23 ${dockerRun}"
-   }
-
- }
-
 }
