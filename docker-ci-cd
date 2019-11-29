@@ -15,7 +15,7 @@ node{
  stage('Push to Docker Hub'){
  
 	
-        sh "docker login -u venky4c6 -p Siddaiah.1990"
+        sh "docker login -u venky4c6 -p siddaiah.1990"
      
 	 sh 'docker push venky4c6/ubuntu'
  }
