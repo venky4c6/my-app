@@ -6,8 +6,20 @@ node{
 	sh 'mvn clean package'
 	sh 'mv target/myweb*.war target/myweb.war'
  }
+ // create image
+ stage('Build Docker Imager'){
+   sh 'docker build -t venky4c6/ubuntu .'
+   
+ }
+ // push the created image to docker hub
+stage('Push to Docker Hub'){
  
- 
+	
+        sh "docker login -u venky4c6 -p siddaiah.1990"
+     
+	 sh 'docker push venky4c6/ubuntu'
+ }
+ // pull the image from hub to docker server to docker installed ec2
  stage('pull to docker ec2'){
  	sshPublisher(publishers: [sshPublisherDesc(configName: 'docker_server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'docker pull venky4c6/ubuntu:latest', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
  }
