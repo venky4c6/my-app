@@ -8,8 +8,15 @@ node{
  }
  
  stage('Build Docker Imager'){
-   sh 'docker build -t pipeline .'
+   sh 'docker build -t venky4c6/ubuntu .'
+   
  }
  
+ stage('Push to Docker Hub'){
  
+	
+        sh "docker login -u venky4c6 -p Siddaiah.1990"
+     
+	 sh 'docker push venky4c6/ubuntu'
+ }
 }
