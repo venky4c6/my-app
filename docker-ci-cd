@@ -19,4 +19,8 @@ node{
      
 	 sh 'docker push venky4c6/ubuntu'
  }
+ 
+ stage('pull to docker ec2'){
+ 	sshPublisher(publishers: [sshPublisherDesc(configName: 'docker_server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'docker pull venky4c6/ubuntu:latest', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+ }
 }
